@@ -1,0 +1,16 @@
+# OS
+.DS_Store
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Environment
+.env
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
