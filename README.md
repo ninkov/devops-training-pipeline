@@ -4,7 +4,7 @@
 
 ## Roadmap
 - [x] Level 1: Local App + Docker
-- [ ] Level 2: GitHub Actions (CI)
+- [x] Level 2: GitHub Actions (CI)
 - [ ] Level 3: AWS Authentication (OIDC, least privilege)
 - [ ] Level 4: Terraform (ECR, ECS Fargate, ALB)
 - [ ] Level 5: Domain + HTTPS (Porkbun + ACM)
