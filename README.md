@@ -1,125 +1,122 @@
 # devops-training-pipeline
 
-🧭 Roadmap Status 
+A hands-on DevOps learning project built step by step to demonstrate how a modern CI/CD pipeline is designed, secured, and automated using industry best practices.
 
-## Roadmap
-- [x] Level 1: Local App + Docker
-- [x] Level 2: GitHub Actions (CI)
-- [ ] Level 3: AWS Authentication (OIDC, least privilege)
-- [ ] Level 4: Terraform (ECR, ECS Fargate, ALB)
-- [ ] Level 5: Domain + HTTPS (Porkbun + ACM)
+This repository focuses on **learning by building**, not shortcuts.
 
+---
 
-## ✅ Level 1 Completed — Local App + Docker
+## 🎯 Project Goal
 
-### What was accomplished
+The goal of this project is to build a **production-style CI/CD pipeline from scratch**, covering:
 
-At this stage, a minimal training application was successfully prepared for CI/CD by containerizing it with Docker.
+- Application containerization with Docker
+- Continuous Integration with GitHub Actions
+- Secure authentication between GitHub and AWS using OIDC (no secrets)
+- Infrastructure provisioning with Terraform
+- Cloud deployment on AWS
+- Domain and HTTPS configuration
 
-The following steps were completed:
+Each step is completed incrementally and documented clearly.
+
+---
+
+## 🧭 Roadmap & Progress
+
+[x] Level 1: Local App + Docker
+[x] Level 2: GitHub Actions (CI)
+[x] Level 3: AWS Authentication (OIDC, no secrets)
+[~] Level 4: Terraform (ECR in progress, ECS & ALB next)
+[ ] Level 5: Domain + HTTPS (Porkbun + ACM)
+
+## 🧱 Level 1 — Local Application & Docker
+
+### ✅ What Was Implemented
 
 - Created a minimal **Node.js “Hello” application**
-- Added a **Dockerfile** to containerize the app
+- Added a `Dockerfile` to containerize the application
 - Built the Docker image locally
-- Ran the container with proper port mapping
-- Resolved real-world issues during setup:
+- Ran the container with correct port mapping
+- Resolved real-world setup issues:
   - Docker credential helper problems on macOS
-  - Dockerfile typo and build errors
-  - Local port conflicts (`3000` already in use)
+  - Dockerfile typos and build errors
+  - Port conflicts on `3000`
 
-### Result
+### 🎯 Result
 
-- The application runs successfully inside a Docker container
-- The app is accessible locally via the browser:
-
-http://localhost:3001
-
-- Docker environment is verified and stable
-
-This confirms that the project is **container-ready** and prepared for automated pipelines.
-
-### Next Step
-
-➡️ **Level 2: GitHub Actions — Continuous Integration (CI)**  
-Set up an automated CI workflow to install dependencies and run tests on every push or pull request.
-
-### Date 06.01.2026
-## ✅ Level 2–4 Progress Summary: CI + Secure AWS Authentication
-
-### Level 2 — Continuous Integration (GitHub Actions)
-
-At this stage, a fully working **CI pipeline** was implemented using GitHub Actions.
-
-What was completed:
-- Created a dedicated CI workflow (`ci.yml`)
-- Automatically triggered on:
-  - push to `main`
-  - pull requests
-- CI steps include:
-  - Repository checkout
-  - Node.js setup
-  - Dependency installation (`npm ci`)
-  - Test execution (`npm test`)
-
-✅ Result:
-- CI pipeline runs successfully
-- All checks pass automatically on every change
-- The repository is protected by automated validation
-
----
-
-### Level 3 — AWS Authentication with OIDC (No Secrets)
-
-To prepare for secure deployments, **GitHub Actions was connected to AWS using OIDC** (OpenID Connect).
-
-What was completed:
-- Created an **OIDC Identity Provider** in AWS IAM for GitHub Actions
-- Created a dedicated **IAM Role** for GitHub deployments
-- Configured a strict **trust relationship**:
-  - Only this repository
-  - Only the `main` branch
-- Avoided all long-lived AWS credentials (no access keys, no secrets)
-
-Why this matters:
-- Uses **short-lived, temporary credentials**
-- Follows AWS and GitHub **security best practices**
-- Production-ready authentication model
-
----
-
-### Level 4 (Part 1) — GitHub → AWS Auth Test Workflow
-
-A separate deployment workflow was introduced to validate AWS authentication.
-
-What was completed:
-- Created a dedicated deployment workflow (`deploy.yml`)
-- Added explicit workflow permissions:
-  - `id-token: write`
-  - `contents: read`
-- Configured GitHub Actions to assume the AWS IAM role via OIDC
-- Verified authentication using:
+- Application runs successfully inside a Docker container
+- Accessible locally at:
 
 
 
-✅ Result:
-- GitHub Actions successfully authenticated to AWS
-- IAM role was assumed without secrets
-- AWS account identity was confirmed from the pipeline
+http://localhost:3001 or http://localhost:3000
 
----
+Docker environment verified and stable
+✔️ Confirms the application is container-ready and suitable for CI/CD automation.
 
-### Key Takeaways
+## 🔁 Level 2 — Continuous Integration (GitHub Actions)
 
-- CI and deployment workflows are **cleanly separated**
-- GitHub → AWS authentication uses **modern, secure OIDC**
-- No credentials are stored in GitHub secrets
-- The project now has a **production-grade CI/CD foundation**
+### ✅ What Was Implemented
 
----
+Created a dedicated CI workflow using GitHub Actions
 
-### Next Steps
+🔔 Workflow Triggers
 
-➡️ **Level 4 (Part 2): Terraform + AWS Infrastructure**
-- Create ECR repository
-- Push Docker images from GitHub Actions
-- Provision ECS / infrastructure using Terraform
+push to main
+
+pull_request
+
+🛠 CI Pipeline Steps
+
+Checkout repository
+
+Setup Node.js
+
+Install dependencies using npm ci
+
+Run tests using npm test
+
+## 🎯 Result
+
+CI runs automatically on every change
+
+All checks pass successfully
+
+Code quality is validated before any deployment step
+
+✔️ Ensures early feedback and safe iteration.
+
+## 🔐 Level 3 — Secure AWS Authentication (OIDC, No Secrets)
+
+### ✅ What Was Implemented
+
+
+Created an OIDC Identity Provider in AWS IAM for GitHub Actions
+
+Created a dedicated IAM Role for deployments
+
+Configured a strict trust relationship:
+
+Only this repository
+
+Only the main branch
+
+Connected GitHub Actions to AWS without storing credentials
+
+Verified authentication using:
+
+
+```bash
+aws sts get-caller-identity 
+```
+## 🔒 Why This Matters
+
+No long-lived AWS access keys
+
+Uses short-lived, temporary credentials
+
+Follows AWS & GitHub security best practices
+
+Production-grade authentication model
+
+✔️ Establishes a secure foundation for automated deployments.
