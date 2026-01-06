@@ -1,0 +1,27 @@
+name: Deploy (AWS Auth Test)
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  aws-auth-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::600180132768:role/github-actions-deployer
+          aws-region: eu-central-1
+
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
