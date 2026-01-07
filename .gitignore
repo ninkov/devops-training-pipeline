@@ -14,3 +14,9 @@ npm-debug.log*
 
 # Logs
 *.log
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.crash.log
+terraform.tfvars

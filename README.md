@@ -58,35 +58,23 @@ Docker environment verified and stable
 
 ## 🔁 Level 2 — Continuous Integration (GitHub Actions)
 
-### ✅ What Was Implemented
+### ✅ What Was accomplished
 
-Created a dedicated CI workflow using GitHub Actions
-
-🔔 Workflow Triggers
-
-push to main
-
-pull_request
-
-🛠 CI Pipeline Steps
-
-Checkout repository
-
-Setup Node.js
-
-Install dependencies using npm ci
-
-Run tests using npm test
+- Created a CI workflow (ci.yml)
+- Triggered on:
+    -  Push to main
+    -  Pull requests
+- CI steps:
+    - Checkout repository
+    - Setup Node.js
+    - Install dependencies (npm ci)
+    - Run tests (npm test)
 
 ## 🎯 Result
 
-CI runs automatically on every change
-
-All checks pass successfully
-
-Code quality is validated before any deployment step
-
-✔️ Ensures early feedback and safe iteration.
+- CI pipeline runs automatically
+- All commits are validated
+- Repository protected by automated checks
 
 ## 🔐 Level 3 — Secure AWS Authentication (OIDC)
 
