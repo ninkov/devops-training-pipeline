@@ -22,13 +22,14 @@ Each step is completed incrementally and documented clearly.
 ---
 
 ## 🧭 Roadmap & Progress
-
+```bash
 [x] Level 1: Local App + Docker
 [x] Level 2: GitHub Actions (CI)
-[x] Level 3: AWS Authentication (OIDC, no secrets)
-[~] Level 4: Terraform (ECR in progress, ECS & ALB next)
+[x] Level 3: AWS Authentication (OIDC, least privilege)
+[x] Level 4.1: Terraform – ECR (Infrastructure as Code)
+[ ] Level 4.2: Terraform – ECS Fargate + ALB
 [ ] Level 5: Domain + HTTPS (Porkbun + ACM)
-
+```
 ## 🧱 Level 1 — Local Application & Docker
 
 ### ✅ What Was Implemented
@@ -48,8 +49,9 @@ Each step is completed incrementally and documented clearly.
 - Accessible locally at:
 
 
-
+```arduino
 http://localhost:3001 or http://localhost:3000
+```
 
 Docker environment verified and stable
 ✔️ Confirms the application is container-ready and suitable for CI/CD automation.
@@ -86,37 +88,70 @@ Code quality is validated before any deployment step
 
 ✔️ Ensures early feedback and safe iteration.
 
-## 🔐 Level 3 — Secure AWS Authentication (OIDC, No Secrets)
-
-### ✅ What Was Implemented
+## 🔐 Level 3 — Secure AWS Authentication (OIDC)
 
 
-Created an OIDC Identity Provider in AWS IAM for GitHub Actions
+### ✅ What was accomplished
 
-Created a dedicated IAM Role for deployments
+- Created an OIDC Identity Provider in AWS IAM for GitHub Actions
+- Created a dedicated IAM Role for deployments
+- Configured a strict trust relationship:
+    - Only this repository
+    - Only the main branch
+- No AWS secrets stored in GitHub
 
-Configured a strict trust relationship:
+### Why this matters
 
-Only this repository
+- Uses short-lived credentials
+- Eliminates long-term access keys in CI
+- Follows AWS & GitHub security best practices
 
-Only the main branch
+## ✅ Level 4.1 — Terraform: Amazon ECR
 
-Connected GitHub Actions to AWS without storing credentials
+### What was accomplished
 
-Verified authentication using:
+- Installed and configured Terraform
+- Authenticated locally using AWS CLI
+- Created Amazon ECR repository using Terraform
+- Verified infrastructure plan and creation
 
+### Terraform result:
 
-```bash
-aws sts get-caller-identity 
+- ECR repository created:
+```arduino
+    devops-training-app
 ```
-## 🔒 Why This Matters
 
-No long-lived AWS access keys
+- Image scanning enabled
+- Managed fully as code
 
-Uses short-lived, temporary credentials
+Cost note
 
-Follows AWS & GitHub security best practices
+- ECR is within AWS Free Tier
+- No charges incurred at this stage
 
-Production-grade authentication model
+```text
+.
+├── app/
+│   ├── Dockerfile
+│   ├── server.js
+│   ├── package.json
+│   └── package-lock.json
+├── infra/
+│   └── terraform/
+│       ├── main.tf
+│       ├── variables.tf
+│       └── outputs.tf
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       └── deploy.yml
+└── README.md
+```
 
-✔️ Establishes a secure foundation for automated deployments.
+### 🔐 Security Principles Used
+
+- No long-lived AWS credentials in GitHub
+- GitHub → AWS via OIDC
+- Least-privilege IAM roles
+- Infrastructure defined as code (Terraform)
